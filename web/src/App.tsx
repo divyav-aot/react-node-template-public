@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 import Home from "./pages/Home";
 import Users from "./pages/Users";
+import States from "./pages/States";
 import Navigation from "./components/common/Navigation";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
@@ -49,6 +50,7 @@ function App() {
             />
             <Route path="/home" element={<Home />} />
             <Route path="/users" element={<Users />} />
+            <Route path="/states" element={<States />} />
           </Routes>
         </div>
       </Router>

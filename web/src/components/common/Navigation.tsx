@@ -21,6 +21,9 @@ const Navigation: React.FC = () => {
         <li>
           <Link to="/users">Users</Link>
         </li>
+        <li>
+          <Link to="/states">States</Link>
+        </li>
       </ul>
     </nav>
   );
