@@ -5,11 +5,17 @@ services:
     ports:
       - "6000:5432"
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d mydb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   api:
     build:
@@ -17,39 +23,38 @@ services:
       context: "./../"
     image: api:latest
     depends_on:
-      - postgres_db
+      postgres_db:
+        condition: service_healthy
     ports:
       - "5000:5000"
-    env_file:
-      - ../api/.env
     environment:
       DB_HOST: postgres_db
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: ${DB_DATABASE}
-      DB_SCHEMA: ${DB_SCHEMA}
-      DB_PORT: ${DB_PORT}
-      PORT: ${PORT}
-      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
-      LOG_LEVEL: ${LOG_LEVEL}
+      DB_USERNAME: postgres
+      DB_PASSWORD: password
+      DB_DATABASE: mydb
+      DB_SCHEMA: public
+      DB_PORT: 5432
+      PORT: 5000
+      LOG_LEVEL: info
+      ALLOWED_ORIGINS: '["http://localhost:3000"]'
+      NODE_ENV: production
 
   python-backend:
     build:
       context: ./../backend
       dockerfile: Dockerfile
     container_name: python-backend
-    env_file:
-      - ../backend/.env
     environment:
       PORT: 8000
       PYTHONPATH: /app
       DB_HOST: postgres_db
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: ${DB_DATABASE}
-      DB_SCHEMA: ${DB_SCHEMA}
-      DB_PORT: ${DB_PORT}
-      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      DB_USERNAME: postgres
+      DB_PASSWORD: password
+      DB_DATABASE: mydb
+      DB_SCHEMA: public
+      DB_PORT: 5432
+      DATABASE_URL: "postgresql://postgres:password@postgres_db:5432/mydb"
+      ALLOWED_ORIGINS: '["http://localhost:3000"]'
     ports:
       - "8300:8000"
     restart: unless-stopped

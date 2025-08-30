@@ -11,7 +11,7 @@ ls -la alembic/versions || true
 
 # Wait for PostgreSQL to be ready
 echo "⏳ Waiting for PostgreSQL to be ready..."
-until pg_isready -h postgres -U fastapi_user -d fastapi_db; do
+until pg_isready -h ${DB_HOST:-postgres_db} -U ${DB_USERNAME:-postgres} -d ${DB_DATABASE:-mydb}; do
     echo "PostgreSQL is unavailable - sleeping"
     sleep 2
 done
