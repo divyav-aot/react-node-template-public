@@ -20,6 +20,8 @@ services:
       - postgres_db
     ports:
       - "5000:5000"
+    env_file:
+      - ../api/.env
     environment:
       DB_HOST: postgres_db
       DB_USERNAME: ${DB_USERNAME}
@@ -36,6 +38,8 @@ services:
       context: ./../backend
       dockerfile: Dockerfile
     container_name: python-backend
+    env_file:
+      - ../backend/.env
     environment:
       PORT: 8000
       PYTHONPATH: /app

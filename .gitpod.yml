@@ -43,9 +43,9 @@ tasks:
       sed -i '/ALLOWED_ORIGINS/d' .env
       echo "ALLOWED_ORIGINS=\"['$(gp url 3000)']\"" >> .env
       echo "ALLOWED_ORIGINS set to: ['$(gp url 3000)']"
-      echo 'Starting backend container'
-      docker-compose up -d backend
-      echo 'Started backend'
+      echo 'Starting python-backend container'
+      docker-compose up -d python-backend
+      echo 'Started python-backend'
   - name: react-web
     init: |
       cd deployment
