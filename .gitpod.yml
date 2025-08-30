@@ -17,14 +17,15 @@ tasks:
     init: |
       cd deployment
       # Set CORS origins for API
-      echo "ALLOWED_ORIGINS=\"['$(gp url 3000)']\"" >> .env
-      echo "ALLOWED_ORIGINS set to: ['$(gp url 3000)']"
+      export ALLOWED_ORIGINS="['$(gp url 3000)']"
+      echo "ALLOWED_ORIGINS set to: $ALLOWED_ORIGINS"
       echo 'Building api container'
       docker-compose build api
       echo 'Built api'
     command: |
       gp await-port 6000
       cd deployment
+      export ALLOWED_ORIGINS="['$(gp url 3000)']"
       echo 'Starting api container'
       docker-compose up -d api
       echo 'Started api'
@@ -32,14 +33,15 @@ tasks:
     init: |
       cd deployment
       # Set CORS origins for python-backend
-      echo "ALLOWED_ORIGINS=\"['$(gp url 3000)']\"" >> .env
-      echo "ALLOWED_ORIGINS set to: ['$(gp url 3000)']"
+      export ALLOWED_ORIGINS="['$(gp url 3000)']"
+      echo "ALLOWED_ORIGINS set to: $ALLOWED_ORIGINS"
       echo 'Building python-backend container'
       docker-compose build python-backend
       echo 'Built python-backend'
     command: |
       gp await-port 6000
       cd deployment
+      export ALLOWED_ORIGINS="['$(gp url 3000)']"
       echo 'Starting python-backend container'
       docker-compose up -d python-backend
       echo 'Started python-backend'
