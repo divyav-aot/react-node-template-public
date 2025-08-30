@@ -1,0 +1,46 @@
+{
+  "name": "rest-api-template",
+  "version": "1.0.0",
+  "description": "This is a template for developing REST API",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "start": "ts-node --transpile-only src/index.ts",
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "typeorm": "ts-node --transpile-only ./node_modules/typeorm/cli.js",
+    "build": "tsc",
+    "pretest": "eslint src --ext .ts",
+    "lint": "eslint --fix src --ext .ts",
+    "test": "jest --detectOpenHandles --passWithNoTests --config ./jest.config.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@tsconfig/node24": "^24.0.1",
+    "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.3.0",
+    "@types/swagger-ui-express": "^4.1.8",
+    "eslint": "^9.33.0",
+    "neostandard": "^0.12.2",
+    "nodemon": "^3.1.10",
+    "ts-jest": "^29.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.40.0"
+  },
+  "dependencies": {
+    "cls-rtracer": "^2.6.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-validation": "^4.1.1",
+    "jest": "^30.0.5",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.2.2",
+    "response-time": "^2.3.4",
+    "swagger-ui-express": "^5.0.1",
+    "typeorm": "^0.3.26",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0"
+  }
+}

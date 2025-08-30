@@ -1,0 +1,84 @@
+image: gitpod/workspace-full:latest
+
+tasks:
+  - name: infrastructure
+    before: |
+      echo 'Bringing down any previously running containers'
+    init: |
+      cd deployment
+      docker-compose down -v
+  - name: postgres_db
+    init: |
+      cd deployment
+      echo 'Starting postgres_db container'
+      docker-compose up -d postgres_db
+      echo 'Started postgres_db'
+  - name: api
+    init: |
+      cd deployment
+      echo -e  "\nALLOWED_ORIGINS=\"['$(gp url 3000)']\"" >> .env
+      echo -e  "\nALLOWED_ORIGINS=\"['$(gp url 3000)']\""
+      echo 'Building api container'
+      docker-compose build api
+      echo 'Built api'
+    command: |
+      gp await-port 6000
+      cd deployment
+      echo 'Starting api container'
+      docker-compose up -d api
+      echo 'Started api'
+  - name: python-backend
+    init: |
+      cd deployment
+      # Set ALLOWED_ORIGINS for python-backend CORS
+      echo "ALLOWED_ORIGINS=\"['$(gp url 3000)']\"" >> .env
+      echo "ALLOWED_ORIGINS set to: ['$(gp url 3000)']"
+      echo 'Building python-backend container'
+      docker-compose build python-backend
+      echo 'Built python-backend'
+    command: |
+      gp await-port 6000
+      cd deployment
+      # Ensure ALLOWED_ORIGINS is set for python-backend CORS
+      sed -i '/ALLOWED_ORIGINS/d' .env
+      echo "ALLOWED_ORIGINS=\"['$(gp url 3000)']\"" >> .env
+      echo "ALLOWED_ORIGINS set to: ['$(gp url 3000)']"
+      echo 'Starting backend container'
+      docker-compose up -d backend
+      echo 'Started backend'
+  - name: react-web
+    init: |
+      cd deployment
+      echo 'Copying .env-gitpod to .env'
+      cp .env-gitpod .env
+      eval $(gp env -e)
+      export VITE_API_BASE_URL=$(gp url 5000)
+      echo "VITE_API_BASE_URL=$(gp url 5000)" >> ../web/.env
+      echo "VITE_API_BASE_URL=$(gp url 5000)"
+      echo 'Building react-web container'
+      docker-compose build react-web
+      echo 'Built react-web'
+    command: |
+      gp await-port 5000
+      eval $(gp env -e)
+      export VITE_API_BASE_URL=$(gp url 5000)
+      cd deployment
+      echo 'Starting react-web container'
+      docker-compose up -d react-web
+      echo 'Started react-web'
+
+ports:
+  - name: react-web
+    description: Port 3000 for the react-web
+    port: 3000
+    onOpen: open-preview
+    visibility: public
+  - name: api
+    description: Port 5000 for the api
+    port: 5000
+    onOpen: notify
+    visibility: public
+  - name: postgres_db
+    description: Port 6000 for the postgres_db
+    port: 6000
+    onOpen: ignore

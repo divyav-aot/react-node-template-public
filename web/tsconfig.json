@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["DOM", "ESNext"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "types": ["vitest/globals"],
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

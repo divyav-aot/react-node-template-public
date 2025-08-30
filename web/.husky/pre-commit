@@ -1,0 +1,4 @@
+cd web 
+
+# Run lint
+npm run lint && npm run test

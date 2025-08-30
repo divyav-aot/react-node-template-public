@@ -1,0 +1,32 @@
+export class Constants {
+  public static ROUTES_METHOD_NAME = 'routes'
+  public static GET_REQUEST_SUCCESS_MESSAGE = 'GET request successfully.'
+  public static REFUSES_TO_AUTHORIZE = 'Forbidden'
+  public static CREATED = 201
+  public static OK = 200
+  public static ACCEPTED = 202
+  public static BAD_REQUEST = 400
+  public static UNAUTHORIZED = 401
+  public static FORBIDDEN = 403
+  public static CONFLICT = 409
+  public static NOT_FOUND = 404
+  public static REQUEST_TIMEOUT = 408
+  public static INTERNAL_SERVER_ERROR = 500
+  public static BAD_GATEWAY = 502
+  public static SERVICE_UNAVAILABLE = 503
+  public static SUCCESS_MESSAGE = 'Rest API started successfully!'
+  public static SYNTAX_ERROR = 'Incorrect format in the input fields'
+  public static SUCCESSFULLY_CREATED_MESSAGE = 'User created successfully!'
+  public static SUCCESSFULLY_UPDATED_MESSAGE = 'User updated successfully!'
+  public static SUCCESSFULLY_DELETED_MESSAGE = 'User deleted successfully!'
+  public static USER_FOUND_MESSAGE = 'User found!'
+  public static INVALID_DATA = 'Invalid Data'
+  public static USER_NOT_FOUND_MESSAGE = 'User not found!'
+  public static CREATE_USER_METHOD_NAME = 'createUser'
+  public static UPDATE_USER_METHOD_NAME = 'updateUser'
+  public static FIND_ALL_USERS_METHOD_NAME = 'findAllUsers'
+  public static DELETE_USER_METHOD_NAME = 'deleteUser'
+  public static FIND_USER_BY_ID_METHOD_NAME = 'findUserById'
+  public static INTERNAL_SERVER_EXCEPTION = 'Internal Server Exception'
+  public static USER_LIST = 'All user list'
+}
