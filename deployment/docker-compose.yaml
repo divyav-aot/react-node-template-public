@@ -72,19 +72,11 @@ services:
     build:
       context: ./../web
       dockerfile: Dockerfile
-      args:
-        - VITE_API_BASE_URL=${VITE_API_BASE_URL:-http://localhost:5000}
-        - VITE_PYTHON_API_BASE_URL=${VITE_PYTHON_API_BASE_URL:-http://localhost:8300}
     container_name: web
     # depends_on:
     #   - backend
     volumes:
       - ./src:/app/src
-    env_file:
-      - ../web/.env
-    environment:
-      - VITE_API_BASE_URL=${VITE_API_BASE_URL:-http://localhost:5000}
-      - VITE_PYTHON_API_BASE_URL=${VITE_PYTHON_API_BASE_URL:-http://localhost:8300}
     ports:
       - "3000:80"
     restart: unless-stopped

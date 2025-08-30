@@ -3,7 +3,7 @@ import { apiRequest, apiSuccess, apiFailure } from "../store/apiSlice";
 import { State } from "../types/state";
 import { AppDispatch } from "../store";
 
-const API_URL = import.meta.env.VITE_PYTHON_API_BASE_URL + "/api/v1";
+const API_URL = import.meta.env.VITE_PYTHON_API_BASE_URL;
 
 export const saveState =
   (stateData: State) => async (dispatch: AppDispatch) => {
