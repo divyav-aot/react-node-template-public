@@ -40,7 +40,7 @@ const States = () => {
     e.preventDefault();
     try {
       await dispatch(saveState(formData));
-      setMessage("User saved successfully!");
+      setMessage("State saved successfully!");
       dispatch(fetchStates());
     } catch (_error) {
       setMessage("Error saving user.");
