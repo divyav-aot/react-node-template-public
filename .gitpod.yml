@@ -22,7 +22,7 @@ tasks:
       docker-compose build api
       echo 'Built api'
     command: |
-      gp await-port 6000
+      gp ports await 6000
       cd deployment
       echo 'Starting api container'
       docker-compose up -d api
@@ -37,7 +37,7 @@ tasks:
       docker-compose build python-backend
       echo 'Built python-backend'
     command: |
-      gp await-port 6000
+      gp ports await 6000
       cd deployment
       # Ensure ALLOWED_ORIGINS is set for python-backend CORS
       sed -i '/ALLOWED_ORIGINS/d' .env
@@ -59,7 +59,7 @@ tasks:
       docker-compose build react-web
       echo 'Built react-web'
     command: |
-      gp await-port 5000
+      gp ports await 5000
       eval $(gp env -e)
       export VITE_API_BASE_URL=$(gp url 5000)
       cd deployment
