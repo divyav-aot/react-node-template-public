@@ -42,12 +42,14 @@ const States = () => {
       await dispatch(saveState(formData));
       setMessage("State saved successfully!");
       dispatch(fetchStates());
-    } catch (_error) {
-      setMessage("Error saving user.");
+    } catch (error: any) {
+      setMessage(
+        error?.message
+          ? `Error saving state: ${error.message}`
+          : "Error saving state."
+      );
     }
   };
-
-
 
   return (
     <div className="users-container">
@@ -126,7 +128,7 @@ const States = () => {
           </thead>
           <tbody>
             {states?.map((state: State, index: number) => (
-              <tr key={index}>
+              <tr key={state.id}>
                 <td>{state.id}</td>
                 <td>{state.name}</td>
                 <td>{state.description}</td>

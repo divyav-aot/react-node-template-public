@@ -24,8 +24,8 @@ describe("API Integration Tests", () => {
         const response = await testNodeApi.healthCheck();
         expect(response.status).toBe(200);
       } catch (error) {
-        // Skip test if backend is not running
-        expect(true).toBe(true); // Pass the test
+        console.error("Error connecting to Node.js backend:", error);
+        throw error;
       }
     });
 
@@ -36,7 +36,8 @@ describe("API Integration Tests", () => {
         expect(response.data).toHaveProperty("users");
         expect(Array.isArray(response.data.users)).toBe(true);
       } catch (error) {
-        expect(true).toBe(true);
+        console.error("Error fetching states from Python backend:", error);
+        throw error;
       }
     });
 
@@ -52,7 +53,8 @@ describe("API Integration Tests", () => {
         expect(response.status).toBe(200);
         expect(response.data).toBeDefined();
       } catch (error) {
-        expect(true).toBe(true);
+        console.error("Error creating user:", error);
+        throw error;
       }
     });
 
@@ -79,7 +81,8 @@ describe("API Integration Tests", () => {
         const response = await testPythonApi.healthCheck();
         expect(response.status).toBe(200);
       } catch (error) {
-        expect(true).toBe(true);
+        console.error("Error connecting to Python backend:", error);
+        throw error;
       }
     });
 
@@ -89,7 +92,8 @@ describe("API Integration Tests", () => {
         expect(response.status).toBe(200);
         expect(Array.isArray(response.data)).toBe(true);
       } catch (error) {
-        expect(true).toBe(true);
+        console.error("Error fetching states from Python backend:", error);
+        throw error;
       }
     });
 
@@ -106,7 +110,8 @@ describe("API Integration Tests", () => {
         expect(response.status).toBe(200);
         expect(response.data).toBeDefined();
       } catch (error) {
-        expect(true).toBe(true);
+        console.error("Error creating state:", error);
+        throw error;
       }
     });
 
@@ -136,14 +141,15 @@ describe("API Integration Tests", () => {
         await testNodeApi.healthCheck();
         nodeBackendAvailable = true;
       } catch (error) {
-        // Node.js backend not available
+        console.error("Error connecting to Node.js backend:", error);
       }
 
       try {
         await testPythonApi.healthCheck();
         pythonBackendAvailable = true;
       } catch (error) {
-        // Python backend not available
+        console.error("Error connecting to Python backend:", error);
+        throw error;
       }
 
       // At least one backend should be available for meaningful testing
@@ -158,14 +164,15 @@ describe("API Integration Tests", () => {
         const response = await testNodeApi.getUsers();
         nodeResponse = response.data;
       } catch (error) {
-        // Node.js backend not available
+        console.error("Error connecting to Node.js backend:", error);
       }
 
       try {
         const response = await testPythonApi.getStates();
         pythonResponse = response.data;
       } catch (error) {
-        // Python backend not available
+        console.error("Error connecting to Python backend:", error);
+        throw error;
       }
 
       // If both responses are available, verify they have different structures

@@ -1,12 +1,12 @@
-import { describe, test, expect, beforeEach, vi } from 'vitest';
-import { createTestStore } from '../utils/testUtils';
-import { mockAxios } from '../utils/apiTestUtils';
-import { saveUser, fetchUsers } from '../../services/userService';
-import { saveState, fetchStates } from '../../services/statesService';
-import { mockUserResponse, mockStateResponse } from '../utils/testUtils';
+import { describe, test, expect, beforeEach, vi } from "vitest";
+import { createTestStore } from "../utils/testUtils";
+import { mockAxios } from "../utils/apiTestUtils";
+import { saveUser, fetchUsers } from "../../services/userService";
+import { saveState, fetchStates } from "../../services/statesService";
+import { mockUserResponse, mockStateResponse } from "../utils/testUtils";
 
 // Mock axios
-vi.mock('axios', () => ({
+vi.mock("axios", () => ({
   default: {
     get: vi.fn(),
     post: vi.fn(),
@@ -15,7 +15,7 @@ vi.mock('axios', () => ({
   },
 }));
 
-describe('Service Integration Tests', () => {
+describe("Service Integration Tests", () => {
   let store: ReturnType<typeof createTestStore>;
   let mockedAxios: ReturnType<typeof mockAxios>;
 
@@ -25,8 +25,8 @@ describe('Service Integration Tests', () => {
     vi.clearAllMocks();
   });
 
-  describe('User Service Integration', () => {
-    test('should integrate fetchUsers with Redux store', async () => {
+  describe("User Service Integration", () => {
+    test("should integrate fetchUsers with Redux store", async () => {
       // Mock successful API response
       mockedAxios.get.mockResolvedValueOnce({ data: mockUserResponse });
 
@@ -35,7 +35,7 @@ describe('Service Integration Tests', () => {
 
       // Verify API was called correctly
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        expect.stringContaining('/users/')
+        expect.stringContaining("/users/")
       );
 
       // Verify Redux state was updated
@@ -45,15 +45,15 @@ describe('Service Integration Tests', () => {
       expect(state.api.fetchUsers?.error).toBeNull();
     });
 
-    test('should integrate saveUser with Redux store', async () => {
+    test("should integrate saveUser with Redux store", async () => {
       const testUser = {
-        firstName: 'John',
-        middleName: 'Michael',
-        lastName: 'Doe',
-        dateOfBirth: '1990-01-01',
+        firstName: "John",
+        middleName: "Michael",
+        lastName: "Doe",
+        dateOfBirth: "1990-01-01",
       };
 
-      const mockResponse = { message: 'User saved successfully!' };
+      const mockResponse = { message: "User saved successfully!" };
       mockedAxios.post.mockResolvedValueOnce({ data: mockResponse });
 
       // Dispatch the action
@@ -61,7 +61,7 @@ describe('Service Integration Tests', () => {
 
       // Verify API was called correctly
       expect(mockedAxios.post).toHaveBeenCalledWith(
-        expect.stringContaining('/user/'),
+        expect.stringContaining("/user/"),
         testUser
       );
 
@@ -75,8 +75,8 @@ describe('Service Integration Tests', () => {
       expect(result).toEqual(mockResponse);
     });
 
-    test('should handle API errors in fetchUsers', async () => {
-      const errorMessage = 'Network Error';
+    test("should handle API errors in fetchUsers", async () => {
+      const errorMessage = "Network Error";
       mockedAxios.get.mockRejectedValueOnce(new Error(errorMessage));
 
       // Dispatch the action
@@ -89,18 +89,20 @@ describe('Service Integration Tests', () => {
       expect(state.api.fetchUsers?.data).toBeNull();
     });
 
-    test('should handle API errors in saveUser', async () => {
+    test("should handle API errors in saveUser", async () => {
       const testUser = {
-        firstName: 'John',
-        lastName: 'Doe',
-        dateOfBirth: '1990-01-01',
+        firstName: "John",
+        lastName: "Doe",
+        dateOfBirth: "1990-01-01",
       };
 
-      const errorMessage = 'Validation Error';
+      const errorMessage = "Validation Error";
       mockedAxios.post.mockRejectedValueOnce(new Error(errorMessage));
 
       // Dispatch the action and expect it to throw
-      await expect(store.dispatch(saveUser(testUser))).rejects.toThrow(errorMessage);
+      await expect(store.dispatch(saveUser(testUser))).rejects.toThrow(
+        errorMessage
+      );
 
       // Verify Redux state has error
       const state = store.getState();
@@ -109,8 +111,8 @@ describe('Service Integration Tests', () => {
     });
   });
 
-  describe('States Service Integration', () => {
-    test('should integrate fetchStates with Redux store', async () => {
+  describe("States Service Integration", () => {
+    test("should integrate fetchStates with Redux store", async () => {
       // Mock successful API response
       mockedAxios.get.mockResolvedValueOnce({ data: mockStateResponse });
 
@@ -119,7 +121,7 @@ describe('Service Integration Tests', () => {
 
       // Verify API was called correctly
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        expect.stringContaining('/states/')
+        expect.stringContaining("/states/")
       );
 
       // Verify Redux state was updated
@@ -129,18 +131,18 @@ describe('Service Integration Tests', () => {
       expect(state.api.fetchStates?.error).toBeNull();
     });
 
-    test('should integrate saveState with Redux store', async () => {
+    test("should integrate saveState with Redux store", async () => {
       const testState = {
         id: 0,
-        name: 'Test State',
-        description: 'Test Description',
+        name: "Test State",
+        description: "Test Description",
         is_active: true,
         sort_order: 1,
-        created_at: '2024-01-01',
+        created_at: "2024-01-01",
         updated_at: null,
       };
 
-      const mockResponse = { message: 'State saved successfully!' };
+      const mockResponse = { message: "State saved successfully!" };
       mockedAxios.post.mockResolvedValueOnce({ data: mockResponse });
 
       // Dispatch the action
@@ -148,7 +150,7 @@ describe('Service Integration Tests', () => {
 
       // Verify API was called correctly
       expect(mockedAxios.post).toHaveBeenCalledWith(
-        expect.stringContaining('/states/'),
+        expect.stringContaining("/states/"),
         testState
       );
 
@@ -162,8 +164,8 @@ describe('Service Integration Tests', () => {
       expect(result).toEqual(mockResponse);
     });
 
-    test('should handle API errors in fetchStates', async () => {
-      const errorMessage = 'Server Error';
+    test("should handle API errors in fetchStates", async () => {
+      const errorMessage = "Server Error";
       mockedAxios.get.mockRejectedValueOnce(new Error(errorMessage));
 
       // Dispatch the action
@@ -176,22 +178,24 @@ describe('Service Integration Tests', () => {
       expect(state.api.fetchStates?.data).toBeNull();
     });
 
-    test('should handle API errors in saveState', async () => {
+    test("should handle API errors in saveState", async () => {
       const testState = {
         id: 0,
-        name: 'Test State',
-        description: 'Test Description',
+        name: "Test State",
+        description: "Test Description",
         is_active: true,
         sort_order: 1,
-        created_at: '2024-01-01',
+        created_at: "2024-01-01",
         updated_at: null,
       };
 
-      const errorMessage = 'Validation Error';
+      const errorMessage = "Validation Error";
       mockedAxios.post.mockRejectedValueOnce(new Error(errorMessage));
 
       // Dispatch the action and expect it to throw
-      await expect(store.dispatch(saveState(testState))).rejects.toThrow(errorMessage);
+      await expect(store.dispatch(saveState(testState))).rejects.toThrow(
+        errorMessage
+      );
 
       // Verify Redux state has error
       const state = store.getState();
@@ -200,8 +204,8 @@ describe('Service Integration Tests', () => {
     });
   });
 
-  describe('Cross-Service Integration', () => {
-    test('should handle multiple concurrent API calls', async () => {
+  describe("Cross-Service Integration", () => {
+    test("should handle multiple concurrent API calls", async () => {
       // Mock responses for both services
       mockedAxios.get
         .mockResolvedValueOnce({ data: mockUserResponse })
@@ -224,15 +228,21 @@ describe('Service Integration Tests', () => {
       expect(state.api.fetchStates?.loading).toBe(false);
     });
 
-    test('should maintain separate loading states for different services', async () => {
+    test("should maintain separate loading states for different services", async () => {
       // Mock delayed responses
       mockedAxios.get
-        .mockImplementationOnce(() => new Promise(resolve => 
-          setTimeout(() => resolve({ data: mockUserResponse }), 100)
-        ))
-        .mockImplementationOnce(() => new Promise(resolve => 
-          setTimeout(() => resolve({ data: mockStateResponse }), 200)
-        ));
+        .mockImplementationOnce(
+          () =>
+            new Promise((resolve) =>
+              setTimeout(() => resolve({ data: mockUserResponse }), 100)
+            )
+        )
+        .mockImplementationOnce(
+          () =>
+            new Promise((resolve) =>
+              setTimeout(() => resolve({ data: mockStateResponse }), 200)
+            )
+        );
 
       // Start both actions
       const usersPromise = store.dispatch(fetchUsers());

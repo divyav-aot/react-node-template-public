@@ -112,7 +112,7 @@ const Users = () => {
           </thead>
           <tbody>
             {users?.users?.map((user: User, index: number) => (
-              <tr key={index}>
+              <tr key={user.userId}>
                 <td>{user.firstName}</td>
                 <td>{user.middleName || "-"}</td>
                 <td>{user.lastName}</td>
