@@ -1,19 +1,23 @@
-import axios from 'axios';
-import { vi } from 'vitest';
+import axios from "axios";
+import { vi } from "vitest";
 
 // API Base URLs for testing
-export const NODE_API_BASE_URL = 'http://localhost:5000';
-export const PYTHON_API_BASE_URL = 'http://localhost:8300';
+export const NODE_API_BASE_URL = "http://localhost:5000";
+export const PYTHON_API_BASE_URL = "http://localhost:8300";
 
 // Helper to wait for API to be ready
-export const waitForApi = async (url: string, maxRetries = 10, delay = 1000) => {
+export const waitForApi = async (
+  url: string,
+  maxRetries = 10,
+  delay = 1000
+) => {
   for (let i = 0; i < maxRetries; i++) {
     try {
       await axios.get(`${url}/health`);
       return true;
     } catch (error) {
       if (i === maxRetries - 1) throw error;
-      await new Promise(resolve => setTimeout(resolve, delay));
+      await new Promise((resolve) => setTimeout(resolve, delay));
     }
   }
   return false;
@@ -45,11 +49,11 @@ export const testNodeApi = {
   async getUsers() {
     return axios.get(`${NODE_API_BASE_URL}/users/`);
   },
-  
+
   async createUser(userData: any) {
     return axios.post(`${NODE_API_BASE_URL}/user/`, userData);
   },
-  
+
   async healthCheck() {
     return axios.get(`${NODE_API_BASE_URL}/health`);
   },
@@ -59,11 +63,11 @@ export const testPythonApi = {
   async getStates() {
     return axios.get(`${PYTHON_API_BASE_URL}/states/`);
   },
-  
+
   async createState(stateData: any) {
     return axios.post(`${PYTHON_API_BASE_URL}/states/`, stateData);
   },
-  
+
   async healthCheck() {
     return axios.get(`${PYTHON_API_BASE_URL}/health`);
   },

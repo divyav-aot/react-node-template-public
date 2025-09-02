@@ -39,8 +39,12 @@ const Users = () => {
       await dispatch(saveUser(formData));
       setMessage("User saved successfully!");
       dispatch(fetchUsers());
-    } catch (_error) {
-      setMessage("Error saving user.");
+    } catch (error) {
+      console.error("Error saving user:", error);
+      setMessage(
+        "Error saving user." +
+          (error instanceof Error && error.message ? ` ${error.message}` : "")
+      );
     }
   };
 

@@ -3,7 +3,7 @@ import { apiRequest, apiSuccess, apiFailure } from "../store/apiSlice";
 import { User } from "../types/user";
 import { AppDispatch } from "../store";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL;
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 export const saveUser = (userData: User) => async (dispatch: AppDispatch) => {
   const key = "saveUser";
@@ -22,9 +22,7 @@ export const fetchUsers = () => async (dispatch: AppDispatch) => {
   const key = "fetchUsers";
   dispatch(apiRequest(key));
   try {
-    const response = await axios.get(
-      import.meta.env.VITE_API_BASE_URL + "/users/"
-    );
+    const response = await axios.get(API_URL + "/users/");
     dispatch(apiSuccess({ key, data: response.data }));
   } catch (error: unknown) {
     dispatch(apiFailure({ key, error: (error as AxiosError).message }));

@@ -1,10 +1,15 @@
-import { describe, test, expect, beforeAll, afterAll, beforeEach } from 'vitest';
-import { testNodeApi, testPythonApi, setupIntegrationTestEnv, cleanupIntegrationTestEnv } from '../utils/apiTestUtils';
-import { createTestUser, createTestState } from '../utils/testUtils';
+import { describe, test, expect, beforeAll, afterAll } from "vitest";
+import {
+  testNodeApi,
+  testPythonApi,
+  setupIntegrationTestEnv,
+  cleanupIntegrationTestEnv,
+} from "../utils/apiTestUtils";
+import { createTestUser, createTestState } from "../utils/testUtils";
 
 // These tests require the backends to be running
 // Run with: npm run test:integration
-describe('API Integration Tests', () => {
+describe("API Integration Tests", () => {
   beforeAll(() => {
     setupIntegrationTestEnv();
   });
@@ -13,8 +18,8 @@ describe('API Integration Tests', () => {
     cleanupIntegrationTestEnv();
   });
 
-  describe('Node.js Backend API Integration', () => {
-    test('should connect to Node.js backend health endpoint', async () => {
+  describe("Node.js Backend API Integration", () => {
+    test("should connect to Node.js backend health endpoint", async () => {
       try {
         const response = await testNodeApi.healthCheck();
         expect(response.status).toBe(200);
@@ -24,23 +29,23 @@ describe('API Integration Tests', () => {
       }
     });
 
-    test('should fetch users from Node.js backend', async () => {
+    test("should fetch users from Node.js backend", async () => {
       try {
         const response = await testNodeApi.getUsers();
         expect(response.status).toBe(200);
-        expect(response.data).toHaveProperty('users');
+        expect(response.data).toHaveProperty("users");
         expect(Array.isArray(response.data.users)).toBe(true);
       } catch (error) {
         expect(true).toBe(true);
       }
     });
 
-    test('should create user via Node.js backend', async () => {
+    test("should create user via Node.js backend", async () => {
       try {
         const testUser = createTestUser({
-          firstName: 'Integration',
-          lastName: 'Test',
-          dateOfBirth: '1990-01-01',
+          firstName: "Integration",
+          lastName: "Test",
+          dateOfBirth: "1990-01-01",
         });
 
         const response = await testNodeApi.createUser(testUser);
@@ -51,11 +56,11 @@ describe('API Integration Tests', () => {
       }
     });
 
-    test('should handle validation errors from Node.js backend', async () => {
+    test("should handle validation errors from Node.js backend", async () => {
       try {
         const invalidUser = createTestUser({
-          firstName: '', // Invalid: empty first name
-          lastName: '', // Invalid: empty last name
+          firstName: "", // Invalid: empty first name
+          lastName: "", // Invalid: empty last name
         });
 
         await testNodeApi.createUser(invalidUser);
@@ -68,8 +73,8 @@ describe('API Integration Tests', () => {
     });
   });
 
-  describe('Python Backend API Integration', () => {
-    test('should connect to Python backend health endpoint', async () => {
+  describe("Python Backend API Integration", () => {
+    test("should connect to Python backend health endpoint", async () => {
       try {
         const response = await testPythonApi.healthCheck();
         expect(response.status).toBe(200);
@@ -78,7 +83,7 @@ describe('API Integration Tests', () => {
       }
     });
 
-    test('should fetch states from Python backend', async () => {
+    test("should fetch states from Python backend", async () => {
       try {
         const response = await testPythonApi.getStates();
         expect(response.status).toBe(200);
@@ -88,11 +93,11 @@ describe('API Integration Tests', () => {
       }
     });
 
-    test('should create state via Python backend', async () => {
+    test("should create state via Python backend", async () => {
       try {
         const testState = createTestState({
-          name: 'Integration Test State',
-          description: 'Created by integration test',
+          name: "Integration Test State",
+          description: "Created by integration test",
           is_active: true,
           sort_order: 999,
         });
@@ -105,11 +110,11 @@ describe('API Integration Tests', () => {
       }
     });
 
-    test('should handle validation errors from Python backend', async () => {
+    test("should handle validation errors from Python backend", async () => {
       try {
         const invalidState = createTestState({
-          name: '', // Invalid: empty name
-          description: '',
+          name: "", // Invalid: empty name
+          description: "",
         });
 
         await testPythonApi.createState(invalidState);
@@ -122,8 +127,8 @@ describe('API Integration Tests', () => {
     });
   });
 
-  describe('Cross-Backend Integration', () => {
-    test('should verify both backends are accessible', async () => {
+  describe("Cross-Backend Integration", () => {
+    test("should verify both backends are accessible", async () => {
       let nodeBackendAvailable = false;
       let pythonBackendAvailable = false;
 
@@ -145,7 +150,7 @@ describe('API Integration Tests', () => {
       expect(nodeBackendAvailable || pythonBackendAvailable).toBe(true);
     });
 
-    test('should handle different response formats from different backends', async () => {
+    test("should handle different response formats from different backends", async () => {
       let nodeResponse = null;
       let pythonResponse = null;
 
@@ -166,7 +171,7 @@ describe('API Integration Tests', () => {
       // If both responses are available, verify they have different structures
       if (nodeResponse && pythonResponse) {
         // Node.js returns { users: [...] }
-        expect(nodeResponse).toHaveProperty('users');
+        expect(nodeResponse).toHaveProperty("users");
         // Python returns [...] directly
         expect(Array.isArray(pythonResponse)).toBe(true);
       }
