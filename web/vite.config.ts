@@ -10,6 +10,7 @@ export default defineConfig({
     globals: true,
     environment: "jsdom", // Use JSDOM for browser-like environment
     include: ["src/**/*.{test,spec}.{js,ts,jsx,tsx}"],
+    setupFiles: ["./src/setupTests.js"],
   },
   build: {
     sourcemap: true,

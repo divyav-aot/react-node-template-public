@@ -44,7 +44,6 @@ const Users = () => {
     }
   };
 
-  console.log("Users data:", users);
   return (
     <div className="users-container">
       <h1 className="users-title">Users</h1>

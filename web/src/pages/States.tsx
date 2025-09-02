@@ -47,7 +47,7 @@ const States = () => {
     }
   };
 
-  console.log("States data:", states);
+
 
   return (
     <div className="users-container">

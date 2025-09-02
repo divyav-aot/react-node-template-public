@@ -12,3 +12,15 @@ if (!global.TextEncoder) {
 if (!global.TextDecoder) {
   global.TextDecoder = TextDecoder
 }
+
+// Handle unhandled promise rejections in tests
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  // Don't exit the process in tests
+});
+
+// Handle uncaught exceptions in tests
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  // Don't exit the process in tests
+});

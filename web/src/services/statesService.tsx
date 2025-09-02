@@ -23,7 +23,6 @@ export const fetchStates = () => async (dispatch: AppDispatch) => {
   const key = "fetchStates";
   dispatch(apiRequest(key));
   try {
-    console.log("API_URL:", API_URL);
     const response = await axios.get(API_URL + "/states/");
     dispatch(apiSuccess({ key, data: response.data }));
   } catch (error: unknown) {
