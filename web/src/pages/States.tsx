@@ -128,7 +128,7 @@ const States = () => {
           </thead>
           <tbody>
             {states?.map((state: State, index: number) => (
-              <tr key={state.id}>
+              <tr key={state.id || index}>
                 <td>{state.id}</td>
                 <td>{state.name}</td>
                 <td>{state.description}</td>

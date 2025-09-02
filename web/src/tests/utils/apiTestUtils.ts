@@ -61,11 +61,11 @@ export const testNodeApi = {
 
 export const testPythonApi = {
   async getStates() {
-    return axios.get(`${PYTHON_API_BASE_URL}/states/`);
+    return axios.get(`${PYTHON_API_BASE_URL}/api/v1/states/`);
   },
 
   async createState(stateData: any) {
-    return axios.post(`${PYTHON_API_BASE_URL}/states/`, stateData);
+    return axios.post(`${PYTHON_API_BASE_URL}/api/v1/states/`, stateData);
   },
 
   async healthCheck() {
