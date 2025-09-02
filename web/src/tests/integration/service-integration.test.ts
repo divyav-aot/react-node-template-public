@@ -212,7 +212,7 @@ describe("Service Integration Tests", () => {
         .mockResolvedValueOnce({ data: mockStateResponse });
 
       // Dispatch both actions concurrently
-      const [usersResult, statesResult] = await Promise.all([
+      await Promise.all([
         store.dispatch(fetchUsers()),
         store.dispatch(fetchStates()),
       ]);
